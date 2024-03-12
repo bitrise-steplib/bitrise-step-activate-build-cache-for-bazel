@@ -1,18 +1,14 @@
-# Activate Bitrise Build Cache Add-On for Bazel
+# Activate Bitrise Build Cache for Bazel
 
-This Step activates Bitrise's remote build cache add-on for subsequent Bazel executions in the workflow.
+[![Step changelog](https://shields.io/github/v/release/bitrise-steplib/bitrise-step-activate-bazel-cache?include_prereleases&label=changelog&color=blueviolet)](https://github.com/bitrise-steplib/bitrise-step-activate-bazel-cache/releases)
 
+Activates Bitrise Remote Build Cache add-on for subsequent Bazel builds in the workflows
 
-[![Step changelog](https://shields.io/github/v/release/bitrise-steplib/bitrise-step-activate-bazel-remote-cache?include_prereleases&label=changelog&color=blueviolet)](https://github.com/bitrise-steplib/bitrise-step-activate-bazel-cache/releases)
-
-Activates Bitrise Remote Build Cache add-on for subsequent Bazel builds in the workflow
 
 <details>
 <summary>Description</summary>
 
 This Step activates Bitrise's remote build cache add-on for subsequent Bazel executions in the workflow.
-
-After this Step executes, Bazel builds will automatically read from the remote cache and push new entries if it's enabled.
 
 </details>
 
@@ -21,6 +17,21 @@ After this Step executes, Bazel builds will automatically read from the remote c
 Add this step directly to your workflow in the [Bitrise Workflow Editor](https://devcenter.bitrise.io/steps-and-workflows/steps-and-workflows-index/).
 
 You can also run this step directly with [Bitrise CLI](https://github.com/bitrise-io/bitrise).
+
+## ⚙️ Configuration
+
+<details>
+<summary>Inputs</summary>
+There are no inputs defined in this step
+</details>
+
+<details>
+<summary>Outputs</summary>
+
+| Environment Variable | Description |
+| --- | --- |
+| `BITRISE_CACHE_ENDPOINT` | The most ideal Bitrise Build Cache endpoint to be used. |
+</details>
 
 ## 🙋 Contributing
 
