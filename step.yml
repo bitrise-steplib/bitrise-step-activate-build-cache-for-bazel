@@ -9,7 +9,7 @@ source_code_url: https://github.com/bitrise-steplib/bitrise-step-activate-bazel-
 support_url: https://github.com/bitrise-steplib/bitrise-step-activate-bazel-cache/issues
 
 type_tags:
-  - utility
+- utility
 
 run_if: .IsCI
 is_skippable: true

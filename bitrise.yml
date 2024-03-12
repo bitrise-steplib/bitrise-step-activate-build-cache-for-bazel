@@ -4,20 +4,29 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 workflows:
   check:
     steps:
-      - git::https://github.com/bitrise-steplib/steps-check.git: { }
+    - git::https://github.com/bitrise-steplib/steps-check.git:
+        inputs:
+        - skip_go_checks: "yes"
+        - workflow: lint
+
+  e2e:
+    steps:
+    - git::https://github.com/bitrise-steplib/steps-check.git:
+        inputs:
+        - workflow: e2e
 
   generate_readme:
     steps:
-      - git::https://github.com/bitrise-steplib/steps-readme-generator.git@main: { }
+    - git::https://github.com/bitrise-steplib/steps-readme-generator.git: { }
 
   run_step:
     envs:
     - BITRISEIO_BUILD_CACHE_ENABLED: "true"
     steps:
-      - path::./:
-      - script:
-          inputs:
-          - content: |-
-              #!/usr/bin/env bash
-              set -ex
-              echo "$BITRISE_CACHE_ENDPOINT"
+    - path::./: { }
+    - script:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            echo "$BITRISE_CACHE_ENDPOINT"
