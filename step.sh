@@ -29,19 +29,10 @@ echo "Bitrise Build Cache is activated in this workspace, configuring the build 
 
 set -x
 
-case "${BITRISE_DEN_VM_DATACENTER}" in
-LAS1)
-export BITRISE_CACHE_ENDPOINT=grpc://las-cache.services.bitrise.io:6666
-;;
-ATL1)
-export BITRISE_CACHE_ENDPOINT=grpc://atl-cache.services.bitrise.io:6666
-;;
-*)
-export BITRISE_CACHE_ENDPOINT=grpcs://pluggable.services.bitrise.io
-;;
-esac
+# download the Bitrise Build Cache CLI
+export BITRISE_BUILD_CACHE_CLI_VERSION="v0.9.0"
+curl --retry 5 -sSfL 'https://raw.githubusercontent.com/bitrise-io/bitrise-build-cache-cli/main/install/installer.sh' | sh -s -- -b /tmp/bin -d $BITRISE_BUILD_CACHE_CLI_VERSION
 
-
-echo "Configuring Bitrise remote cache..."
-envman add --key BITRISE_CACHE_ENDPOINT --value "$BITRISE_CACHE_ENDPOINT"
+# run the Bitrise Build Cache CLI
+/tmp/bin/bitrise-build-cache enable-for bazel
 
