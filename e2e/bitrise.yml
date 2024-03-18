@@ -3,7 +3,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 workflows:
   test_bazel_build:
-    description: livegrep sample currently supports Ubuntu 20.04 only, skipping on other stacks
+    title: livegrep sample currently supports Ubuntu 20.04 only, skipping on other stacks
     steps:
     - bitrise-run:
         run_if: |-
@@ -21,7 +21,7 @@ workflows:
     - _setup
     steps:
     - path::./:
-        title: Execute step
+        title: Test Current Step
         run_if: "true"
         is_skippable: false
     - change-workdir:
