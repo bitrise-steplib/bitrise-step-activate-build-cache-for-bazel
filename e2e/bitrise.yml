@@ -3,16 +3,27 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 workflows:
   test_bazel_build:
+    description: livegrep sample currently supports Ubuntu 20.04 only, skipping on other stacks
+    steps:
+    - bitrise-run:
+        run_if: |-
+          {{ or (enveq "BITRISEIO_STACK_ID" "linux-docker-android-20.04") (not .IsCI) }}
+        is_skippable: true
+        inputs:
+        - workflow_id: utility_bazel_build
+        - bitrise_config_path: ./e2e/bitrise.yml
+
+  utility_bazel_build:
     envs:
     - TEST_APP_URL: https://github.com/bitrise-samples/livegrep.git
     - TEST_APP_BRANCH: main
     before_run:
     - _setup
     steps:
-    # - path::./:
-    #     title: Execute step
-    #     run_if: "true"
-    #     is_skippable: false
+    - path::./:
+        title: Execute step
+        run_if: "true"
+        is_skippable: false
     - change-workdir:
         title: Switch working dir to _tmp
         inputs:
