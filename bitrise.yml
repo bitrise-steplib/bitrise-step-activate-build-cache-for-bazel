@@ -18,15 +18,3 @@ workflows:
   generate_readme:
     steps:
     - git::https://github.com/bitrise-steplib/steps-readme-generator.git: { }
-
-  run_step:
-    envs:
-    - BITRISEIO_BUILD_CACHE_ENABLED: "true"
-    steps:
-    - path::./: { }
-    - script:
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            set -ex
-            echo "$BITRISE_CACHE_ENDPOINT"
