@@ -1,5 +1,5 @@
 title: |-
-  Activate Bitrise Build Cache for Bazel
+  Build Cache for Bazel
 summary: |
   Activates Bitrise Remote Build Cache for subsequent Bazel builds in the workflows.
 description: |
