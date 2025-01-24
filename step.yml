@@ -22,13 +22,13 @@ toolkit:
     entry_file: step.sh
 
 inputs:
-  - enable_rbe: "false"
-    opts:
-      title: Enable Bazel RBE
-      is_required: true
-      value_options:
-        - "true"
-        - "false"
-      summary: Enable Bazel Remote Build Execution (RBE)
-      description: |-
-        When enabled, this sets up Bazel to use Bitrise's Remote Build Execution (RBE) service to execute builds.
+- enable_rbe: "false"
+  opts:
+    title: Enable Bazel RBE
+    is_required: true
+    value_options:
+    - "true"
+    - "false"
+    summary: Enable Bazel Remote Build Execution (RBE)
+    description: |-
+      When enabled, this sets up Bazel to use Bitrise's Remote Build Execution (RBE) service to execute builds.
