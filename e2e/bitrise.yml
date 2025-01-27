@@ -24,6 +24,8 @@ workflows:
         title: Test Current Step
         run_if: "true"
         is_skippable: false
+        inputs:
+        - enable_rbe: true
     - change-workdir:
         title: Switch working dir to _tmp
         inputs:
