@@ -32,3 +32,13 @@ inputs:
     summary: Enable Bazel Remote Build Execution (RBE)
     description: |-
       When enabled, this sets up Bazel to use Bitrise's Remote Build Execution (RBE) service to execute builds.
+- timestamps: "true"
+  opts:
+    title: Add timestamps to build messages
+    is_required: true
+    value_options:
+      - "true"
+      - "false"
+    summary: Add timestamps to build messages
+    description: |-
+      When enabled, this sets up Bazel to add timestamps to log messages during the build.

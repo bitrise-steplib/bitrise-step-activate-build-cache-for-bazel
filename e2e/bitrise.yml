@@ -26,6 +26,7 @@ workflows:
         is_skippable: false
         inputs:
         - enable_rbe: true
+        - timestamps: true
     - change-workdir:
         title: Switch working dir to _tmp
         inputs:
