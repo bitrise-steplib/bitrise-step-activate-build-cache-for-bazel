@@ -74,7 +74,9 @@ workflows:
             # Make the binary executable
             chmod +x bazel
 
-            # Move the executable to a directory in your PATH
+            where bazel || true
+            brew unlink bazel || true
+            
             sudo mv bazel /usr/local/bin/
 
             # Verify the installation
