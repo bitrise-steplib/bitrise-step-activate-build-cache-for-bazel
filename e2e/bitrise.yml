@@ -66,6 +66,16 @@ workflows:
             elif [ "$OS_NAME" = "darwin" ]; then
               curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-darwin-arm64"
               mv bazelisk-darwin-arm64 bazel
+              
+              xcode-select --install
+              brew install gnu-tar
+              brew install coreutils
+              
+              file "$(bazel info output_base)/external/bazel_tools/tools/build_defs/pkg/build_tar"
+              ls -l "$(bazel info output_base)/external/bazel_tools/tools/build_defs/pkg/build_tar"
+              bazel version
+              java -version
+              uname -m
             fi
 
             # Make the binary executable
@@ -95,5 +105,5 @@ workflows:
         inputs:
         - repository_url: https://github.com/bazelbuild/bazel.git
         - clone_into_dir: ./_tmp
-        - tag: 8.2.1
+        - tag: 8.2.0
         - clone_depth: 1
