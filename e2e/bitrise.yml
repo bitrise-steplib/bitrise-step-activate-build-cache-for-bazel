@@ -69,12 +69,6 @@ workflows:
 
               brew install gnu-tar
               brew install coreutils
-
-              file "$(bazel info output_base)/external/bazel_tools/tools/build_defs/pkg/build_tar"
-              ls -l "$(bazel info output_base)/external/bazel_tools/tools/build_defs/pkg/build_tar"
-              bazel version
-              java -version
-              uname -m
             fi
 
             # Make the binary executable
@@ -85,6 +79,12 @@ workflows:
 
             # Verify the installation
             bazel --version
+
+            file "$(bazel info output_base)/external/bazel_tools/tools/build_defs/pkg/build_tar"
+            ls -l "$(bazel info output_base)/external/bazel_tools/tools/build_defs/pkg/build_tar"
+            bazel version
+            java -version
+            uname -m
     - script:
         title: Run Bazel build
         deps:
