@@ -4,7 +4,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 workflows:
   test_bazel_build:
     envs:
-    - TEST_APP_URL: https://github.com/bitrise-io/bazel.git
+    - TEST_APP_URL: https://github.com/bazelbuild/bazel.git
     - TEST_APP_BRANCH: master
     before_run:
     - _setup
