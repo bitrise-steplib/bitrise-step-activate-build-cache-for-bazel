@@ -94,7 +94,7 @@ workflows:
             bazel build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
     envs:
-    - USE_BAZEL_VERSION: 8.2.1
+    - USE_BAZEL_VERSION: 7.4.0
     steps:
     - script:
         title: Delete _tmp dir
@@ -104,5 +104,5 @@ workflows:
         inputs:
         - repository_url: https://github.com/bazelbuild/bazel.git
         - clone_into_dir: ./_tmp
-        - tag: 8.2.0
+        - tag: 7.4.0
         - clone_depth: 1
