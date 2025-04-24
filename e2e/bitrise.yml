@@ -3,14 +3,6 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 workflows:
   test_bazel_build:
-    steps:
-    - bitrise-run:
-        is_skippable: true
-        inputs:
-        - workflow_id: utility_bazel_build
-        - bitrise_config_path: ./e2e/bitrise.yml
-
-  utility_bazel_build:
     envs:
     - TEST_APP_URL: https://github.com/bitrise-io/bazel.git
     - TEST_APP_BRANCH: master
@@ -45,7 +37,7 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
-            build //src:bazel-dev --announce_rc --verbose_failures
+            bazel build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
     steps:
     - script:
