@@ -16,6 +16,28 @@ workflows:
         inputs:
         - enable_rbe: true
         - timestamps: true
+    - script:
+        title: Check bazelrc
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            echo "~/.bazelrc content:"
+            cat ~/.bazelrc
+
+            if grep -q "build --remote_cache=" ~/.bazelrc; then
+              echo "Remote cache enabled in bazelrc ✅"
+            else 
+              echo "Remote cache not enabled in bazelrc ❌"
+              exit 1
+            fi
+
+             if grep -q "build --bes_backend=" ~/.bazelrc; then
+              echo "BES set in bazelrc ✅"
+            else 
+              echo "BES not set in bazelrc ❌"
+              exit 1
+            fi
     - change-workdir:
         title: Switch working dir to _tmp
         inputs:
@@ -25,13 +47,39 @@ workflows:
         run_if: "{{ .IsCI }}"
         inputs:
         - content: |-
-            #!/bin/env bash
-            asdf install golang 1.24.0
-            asdf global golang 1.24.0
+            #!/usr/bin/env bash
+            set -exo pipefail
 
-            go install github.com/bazelbuild/bazelisk@v1.26.0
-            sudo ln -s $(which bazelisk) /usr/local/bin/bazel
+            # Download Bazelisk using curl
+            # Define the Bazelisk version you want to install
+            export BAZELISK_VERSION='1.21.0'
+
+            # Determine the operating system
+            OS="$(uname -s)"
+            case "$OS" in
+              Linux*)     OS_NAME=linux;;
+              Darwin*)    OS_NAME=darwin;;
+              *)          echo "Unsupported OS: $OS"; exit 1;;
+            esac
+
+            # Download Bazelisk using curl based on the operating system
+            if [ "$OS_NAME" = "linux" ]; then
+              curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-amd64"
+              mv bazelisk-linux-amd64 bazel
+            elif [ "$OS_NAME" = "darwin" ]; then
+              curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-darwin-arm64"
+              mv bazelisk-darwin-arm64 bazel
+            fi
+
+            # Make the binary executable
+            chmod +x bazel
+            
+            # Move the executable to a directory in your PATH
+            sudo mv bazel /usr/local/bin/
+            
+            # Verify the installation
             bazel --version
+
     - script:
         title: Run Bazel build
         deps:
