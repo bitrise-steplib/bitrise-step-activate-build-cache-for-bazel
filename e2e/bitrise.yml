@@ -67,7 +67,6 @@ workflows:
               curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-darwin-arm64"
               mv bazelisk-darwin-arm64 bazel
 
-              xcode-select --install
               brew install gnu-tar
               brew install coreutils
 
