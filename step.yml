@@ -37,8 +37,8 @@ inputs:
     title: Add timestamps to build messages
     is_required: true
     value_options:
-      - "true"
-      - "false"
+    - "true"
+    - "false"
     summary: Add timestamps to build messages
     description: |-
       When enabled, this sets up Bazel to add timestamps to log messages during the build.
