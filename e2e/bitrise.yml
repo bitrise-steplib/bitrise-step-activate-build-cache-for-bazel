@@ -27,14 +27,14 @@ workflows:
 
             if grep -q "build --remote_cache=" ~/.bazelrc; then
               echo "Remote cache enabled in bazelrc ✅"
-            else 
+            else
               echo "Remote cache not enabled in bazelrc ❌"
               exit 1
             fi
 
              if grep -q "build --bes_backend=" ~/.bazelrc; then
               echo "BES set in bazelrc ✅"
-            else 
+            else
               echo "BES not set in bazelrc ❌"
               exit 1
             fi
@@ -73,10 +73,10 @@ workflows:
 
             # Make the binary executable
             chmod +x bazel
-            
+
             # Move the executable to a directory in your PATH
             sudo mv bazel /usr/local/bin/
-            
+
             # Verify the installation
             bazel --version
     - script:
