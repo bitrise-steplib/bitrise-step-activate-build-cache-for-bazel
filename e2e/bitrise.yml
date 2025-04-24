@@ -76,7 +76,7 @@ workflows:
 
             where bazel || true
             brew unlink bazel || true
-            
+
             sudo mv bazel /usr/local/bin/
 
             # Verify the installation
