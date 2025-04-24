@@ -26,7 +26,10 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
-            go install github.com/bazelbuild/bazelisk@latest
+            asdf install golang 1.23
+            asdf global golang 1.23
+            
+            go install github.com/bazelbuild/bazelisk@1.26.0
             sudo ln -s $(which bazelisk) /usr/local/bin/bazel
             bazel --version
     - script:
