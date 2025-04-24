@@ -30,11 +30,10 @@ workflows:
         - path: ./_tmp
     - script:
         title: Install bazel
-        run_if: '{{ .IsCI }}'
+        run_if: "{{ .IsCI }}"
         inputs:
         - content: |-
             #!/bin/env bash
-            
             go install github.com/bazelbuild/bazelisk@latest
             sudo ln -s $(which bazelisk) /usr/local/bin/bazel
             bazel --version
@@ -46,7 +45,6 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
-
             build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
     steps:
