@@ -89,7 +89,7 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
-              
+
             bazel sync
             bazel build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
