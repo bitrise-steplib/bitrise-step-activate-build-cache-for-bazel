@@ -97,6 +97,8 @@ workflows:
             #!/bin/env bash
             bazel build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
+    envs:
+    - USE_BAZEL_VERSION: 8.2.1
     steps:
     - script:
         title: Delete _tmp dir
