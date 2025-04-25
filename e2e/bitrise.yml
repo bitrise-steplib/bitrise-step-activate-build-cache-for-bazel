@@ -72,7 +72,7 @@ workflows:
             asdf install python 3.12.8
             asdf global python 3.12.8
             echo "python 3.12.8" >> ./.tool-versions
-            cp .tool-versions "$(bazel info execution_root 2>/dev/null || bazel info bazel-bin)"
+            cp .tool-versions "$(bazel info execution_root)/.tool-versions"
             asdf reshim python
 
             # Make the binary executable
