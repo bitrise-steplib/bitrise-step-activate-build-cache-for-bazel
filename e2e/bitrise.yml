@@ -69,10 +69,6 @@ workflows:
 
               brew install gnu-tar
               brew install coreutils
-              
-              sw_vers -productVersion
-              xcrun --sdk macosx --show-sdk-version
-              xcrun --sdk macosx --show-sdk-path
             fi
 
             # Make the binary executable
@@ -102,7 +98,7 @@ workflows:
             bazel build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
     envs:
-    - USE_BAZEL_VERSION: 7.4.0
+    - USE_BAZEL_VERSION: 8.2.1
     steps:
     - script:
         title: Delete _tmp dir
@@ -112,7 +108,7 @@ workflows:
         inputs:
         - repository_url: https://github.com/bazelbuild/bazel.git
         - clone_into_dir: ./_tmp
-        - tag: 7.4.0
+        - tag: ""
         - clone_depth: 1
         - update_submodules: "yes"
         - branch: master
@@ -122,4 +118,4 @@ workflows:
         - pull_request_unverified_merge_branch: ""
         - pull_request_head_branch: ""
         - merge_pr: "no"
-        - commit: ""
+        - commit: "f2424778bf6b3043fc5729b6545c8189066f4ff7"
