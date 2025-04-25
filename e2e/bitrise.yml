@@ -66,14 +66,12 @@ workflows:
             elif [ "$OS_NAME" = "darwin" ]; then
               curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-darwin-arm64"
               mv bazelisk-darwin-arm64 bazel
-
-              brew install gnu-tar
-              brew install coreutils
-              
-              asdf plugin add python
-              asdf install python 3.12.8
-              asdf global python 3.12.8
             fi
+
+            asdf plugin add python
+            asdf install python 3.12.8
+            asdf global python 3.12.8
+            echo "python 3.12.8" >> ./.tool-versions
 
             # Make the binary executable
             chmod +x bazel
