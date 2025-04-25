@@ -121,3 +121,4 @@ workflows:
         - pull_request_unverified_merge_branch: ""
         - pull_request_head_branch: ""
         - merge_pr: "no"
+        - commit: ""
