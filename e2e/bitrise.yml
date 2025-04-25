@@ -120,4 +120,4 @@ workflows:
         - pull_request_merge_branch: ""
         - pull_request_unverified_merge_branch: ""
         - pull_request_head_branch: ""
-        - merge_pr: "false"
+        - merge_pr: "no"
