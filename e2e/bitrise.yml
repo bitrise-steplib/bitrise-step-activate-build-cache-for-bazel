@@ -115,4 +115,9 @@ workflows:
         - clone_depth: 1
         - update_submodules: "yes"
         - branch: master
-        - branch_dest: master
+        - branch_dest: ""
+        - pull_request_repository_url: ""
+        - pull_request_merge_branch: ""
+        - pull_request_unverified_merge_branch: ""
+        - pull_request_head_branch: ""
+        - merge_pr: false
