@@ -71,26 +71,16 @@ workflows:
             asdf plugin add python
             asdf install python 3.12.8
             asdf global python 3.12.8
-            echo "python 3.12.8" >> ./.tool-versions
-            bazel info execution_root  # This creates the execroot dir if not present
-            execroot="$(bazel info execution_root)"
-            cp .tool-versions "$execroot/.tool-versions"
             asdf reshim python
 
             # Make the binary executable
             chmod +x bazel
-
-            where bazel || true
-            brew unlink bazel || true
 
             sudo mv bazel /usr/local/bin/
 
             # Verify the installation
             bazel --version
             uname -m
-            
-            echo "$PATH"
-            export PATH=/usr/bin:$PATH
     - script:
         title: Run Bazel build
         deps:
@@ -99,6 +89,8 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
+              
+            echo "python 3.12.8" >> ./.tool-versions  
               
             echo "PATH: $PATH"
             which python
