@@ -72,6 +72,8 @@ workflows:
             asdf install python 3.12.8
             asdf global python 3.12.8
             echo "python 3.12.8" >> ./.tool-versions
+            cp .tool-versions "$(bazel info execution_root 2>/dev/null || bazel info bazel-bin)"
+            asdf reshim python
 
             # Make the binary executable
             chmod +x bazel
@@ -95,6 +97,15 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
+              
+            echo "PATH: $PATH"
+            which python
+            which python3
+            python --version
+            python3 --version
+            ls -l "$(which python3)"
+            cat .tool-versions
+            ls $(bazel info execution_root)/.tool-versions
 
             bazel sync
             bazel build //src:bazel-dev --announce_rc --verbose_failures
