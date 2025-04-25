@@ -85,10 +85,8 @@ workflows:
             
             echo "$PATH"
             export PATH=/usr/bin:$PATH  
-              
-            where file
-              
-            file bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar
+            
+            lipo -info  bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar
             ls -l bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar
     - script:
         title: Run Bazel build
