@@ -90,6 +90,8 @@ workflows:
         - content: |-
             #!/bin/env bash
               
+            set -ex
+              
             bazel build --nobuild //src:bazel-dev --announce_rc --verbose_failures
             execroot="$(bazel info execution_root)"
               
@@ -104,8 +106,8 @@ workflows:
             ls -l "$(which python3)"
             cat .tool-versions
             ls $(bazel info execution_root)/.tool-versions
-
-            bazel build //src:bazel-dev --announce_rc --verbose_failures
+              
+            bazel build  --spawn_strategy=standalone  --sandbox_debug   --announce_rc --verbose_failures --strategy=PackageTar=standalone //src:bazel-dev
   _setup:
     envs:
     - USE_BAZEL_VERSION: 8.2.1
