@@ -107,7 +107,6 @@ workflows:
             cat .tool-versions
             ls $(bazel info execution_root)/.tool-versions
 
-            bazel sync
             bazel build //src:bazel-dev --announce_rc --verbose_failures
   _setup:
     envs:
