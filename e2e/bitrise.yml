@@ -113,4 +113,4 @@ workflows:
         - clone_into_dir: ./_tmp
         - tag: 7.4.0
         - clone_depth: 1
-        - update_submodules: yes
+        - update_submodules: "yes"
