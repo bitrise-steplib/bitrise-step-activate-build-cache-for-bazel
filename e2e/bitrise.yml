@@ -70,6 +70,7 @@ workflows:
               brew install gnu-tar
               brew install coreutils
               
+              asdf plugin add python
               asdf install python 3.12.8
               asdf global python 3.12.8
             fi
