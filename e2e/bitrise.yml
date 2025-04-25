@@ -115,3 +115,4 @@ workflows:
         - clone_depth: 1
         - update_submodules: "yes"
         - branch: master
+        - branch_dest: master
