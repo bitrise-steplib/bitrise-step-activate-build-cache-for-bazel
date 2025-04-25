@@ -86,8 +86,8 @@ workflows:
             echo "$PATH"
             export PATH=/usr/bin:$PATH  
             
-            ls -l bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar
-            sh bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar --help
+            ls -l bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar || true
+            sh bazel-out/darwin_arm64-opt-exec-ST-fad1763555eb/bin/external/rules_pkg~/pkg/private/tar/build_tar --help || true
     - script:
         title: Run Bazel build
         deps:
