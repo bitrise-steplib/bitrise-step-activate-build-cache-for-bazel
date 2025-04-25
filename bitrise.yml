@@ -13,7 +13,7 @@ workflows:
     steps:
     - git::https://github.com/bitrise-steplib/steps-check.git:
         inputs:
-        - workflow: test_bazel_build
+        - workflow: e2e
 
   generate_readme:
     steps:
