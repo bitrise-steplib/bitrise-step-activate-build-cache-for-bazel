@@ -107,7 +107,7 @@ workflows:
             cat .tool-versions
             ls $(bazel info execution_root)/.tool-versions
               
-            bazel build  --spawn_strategy=standalone  --sandbox_debug   --announce_rc --verbose_failures --strategy=PackageTar=standalone //src:bazel-dev
+            bazel build  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
   _setup:
     envs:
     - USE_BAZEL_VERSION: 8.2.1
