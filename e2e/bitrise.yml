@@ -96,7 +96,7 @@ workflows:
             execroot="$(bazel info execution_root)"
               
             echo "python 3.12.8" >> ./.tool-versions  
-            cp .tool-versions "$execroot/.tool-versions"              
+            # cp .tool-versions "$execroot/.tool-versions"              
               
             echo "PATH: $PATH"
             which python
