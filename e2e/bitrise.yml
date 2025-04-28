@@ -87,7 +87,7 @@ workflows:
               
             set -ex
 
-            bazel build --noremote_accept_cached --action_env=ASDF_PYTHON_VERSION=3.12.8  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
+            bazel build --action_env=ASDF_PYTHON_VERSION=3.12.8  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
   _setup:
     envs:
     - USE_BAZEL_VERSION: 8.2.1
