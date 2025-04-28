@@ -64,6 +64,7 @@ workflows:
               mv bazelisk-darwin-arm64 bazel
             fi
 
+            asdf plugin add python
             asdf install python 3.12.8
             asdf global python 3.12.8
 
