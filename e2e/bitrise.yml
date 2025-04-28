@@ -64,6 +64,10 @@ workflows:
               mv bazelisk-darwin-arm64 bazel
             fi
 
+            asdf plugin add python
+            asdf install python 3.12.8
+            asdf global python 3.12.8
+
             # Make the binary executable
             chmod +x bazel
 
@@ -83,7 +87,7 @@ workflows:
               
             set -ex
 
-            bazel build --action_env=ASDF_PYTHON_VERSION  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
+            bazel build --action_env=ASDF_PYTHON_VERSION=3.12.8  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
   _setup:
     envs:
     - USE_BAZEL_VERSION: 8.2.1
