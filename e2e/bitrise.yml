@@ -47,10 +47,6 @@ workflows:
             #!/usr/bin/env bash
             set -exo pipefail
 
-            # Download Bazelisk using curl
-            # Define the Bazelisk version you want to install
-            export BAZELISK_VERSION='1.26.0'
-
             # Determine the operating system
             OS="$(uname -s)"
             case "$OS" in
@@ -68,10 +64,8 @@ workflows:
               mv bazelisk-darwin-arm64 bazel
             fi
 
-            asdf plugin add python
             asdf install python 3.12.8
             asdf global python 3.12.8
-            asdf reshim python
 
             # Make the binary executable
             chmod +x bazel
@@ -91,26 +85,12 @@ workflows:
             #!/bin/env bash
               
             set -ex
-              
-            bazel build --nobuild //src:bazel-dev --announce_rc --verbose_failures
-            execroot="$(bazel info execution_root)"
-              
-            echo "python 3.12.8" >> ./.tool-versions  
-            # cp .tool-versions "$execroot/.tool-versions"              
-              
-            echo "PATH: $PATH"
-            which python
-            which python3
-            python --version
-            python3 --version
-            ls -l "$(which python3)"
-            cat .tool-versions
-            ls $(bazel info execution_root)/.tool-versions
-              
-            bazel build --noremote_accept_cached --spawn_strategy=standalone  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
+
+            bazel build --noremote_accept_cached --action_env=ASDF_PYTHON_VERSION=3.12.8  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
   _setup:
     envs:
     - USE_BAZEL_VERSION: 8.2.1
+    - BAZELISK_VERSION: 1.26.0
     steps:
     - script:
         title: Delete _tmp dir
