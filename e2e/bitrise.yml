@@ -3,20 +3,6 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 workflows:
   test_bazel_build:
-    title: livegrep sample currently supports Ubuntu 20.04 only, skipping on other stacks
-    steps:
-    - bitrise-run:
-        run_if: |-
-          {{ or (enveq "BITRISEIO_STACK_ID" "linux-docker-android-20.04") (not .IsCI) }}
-        is_skippable: true
-        inputs:
-        - workflow_id: utility_bazel_build
-        - bitrise_config_path: ./e2e/bitrise.yml
-
-  utility_bazel_build:
-    envs:
-    - TEST_APP_URL: https://github.com/bitrise-samples/livegrep.git
-    - TEST_APP_BRANCH: main
     before_run:
     - _setup
     steps:
@@ -27,10 +13,69 @@ workflows:
         inputs:
         - enable_rbe: true
         - timestamps: true
+    - script:
+        title: Check bazelrc
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            echo "~/.bazelrc content:"
+            cat ~/.bazelrc
+
+            if grep -q "build --remote_cache=" ~/.bazelrc; then
+              echo "Remote cache enabled in bazelrc ✅"
+            else
+              echo "Remote cache not enabled in bazelrc ❌"
+              exit 1
+            fi
+
+             if grep -q "build --bes_backend=" ~/.bazelrc; then
+              echo "BES set in bazelrc ✅"
+            else
+              echo "BES not set in bazelrc ❌"
+              exit 1
+            fi
     - change-workdir:
         title: Switch working dir to _tmp
         inputs:
         - path: ./_tmp
+    - script:
+        title: Install bazel
+        run_if: "{{ .IsCI }}"
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -exo pipefail
+
+            # Determine the operating system
+            OS="$(uname -s)"
+            case "$OS" in
+              Linux*)     OS_NAME=linux;;
+              Darwin*)    OS_NAME=darwin;;
+              *)          echo "Unsupported OS: $OS"; exit 1;;
+            esac
+
+            # Download Bazelisk using curl based on the operating system
+            if [ "$OS_NAME" = "linux" ]; then
+              curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-amd64"
+              mv bazelisk-linux-amd64 bazel
+            elif [ "$OS_NAME" = "darwin" ]; then
+              curl -fLO "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-darwin-arm64"
+              mv bazelisk-darwin-arm64 bazel
+            fi
+
+            asdf plugin add python
+            asdf install python 3.12.8
+            asdf global python 3.12.8
+
+            # Make the binary executable
+            chmod +x bazel
+
+            sudo mv bazel /usr/local/bin/
+
+            # Verify the installation
+            bazel --version
+            uname -m
     - script:
         title: Run Bazel build
         deps:
@@ -39,21 +84,31 @@ workflows:
         inputs:
         - content: |-
             #!/bin/env bash
-            if [ $(uname -s) = "Linux" ]; then
-              wget https://github.com/bazelbuild/bazelisk/releases/download/v1.19.0/bazelisk-linux-amd64
-              chmod +x bazelisk-linux-amd64
-              mv bazelisk-linux-amd64 /usr/local/bin/bazel
-            fi
+              
+            set -ex
 
-            bazel build --verbose_failures //...
+            bazel build --action_env=ASDF_PYTHON_VERSION=3.12.8  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
   _setup:
+    envs:
+    - USE_BAZEL_VERSION: 8.2.1
+    - BAZELISK_VERSION: 1.26.0
     steps:
     - script:
         title: Delete _tmp dir
         inputs:
         - content: rm -rf _tmp
-    - git::https://github.com/bitrise-steplib/bitrise-step-simple-git-clone.git:
+    - git-clone@8:
         inputs:
-        - repository_url: $TEST_APP_URL
+        - repository_url: https://github.com/bazelbuild/bazel.git
         - clone_into_dir: ./_tmp
-        - branch: $TEST_APP_BRANCH
+        - tag: ""
+        - clone_depth: 1
+        - update_submodules: "yes"
+        - branch: master
+        - branch_dest: ""
+        - pull_request_repository_url: ""
+        - pull_request_merge_branch: ""
+        - pull_request_unverified_merge_branch: ""
+        - pull_request_head_branch: ""
+        - merge_pr: "no"
+        - commit: "f2424778bf6b3043fc5729b6545c8189066f4ff7"

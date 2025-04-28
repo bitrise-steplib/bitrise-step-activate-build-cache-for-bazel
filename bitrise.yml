@@ -14,7 +14,9 @@ workflows:
     - git::https://github.com/bitrise-steplib/steps-check.git:
         inputs:
         - workflow: e2e
-
+    - deploy-to-bitrise-io@2:
+        inputs:
+        - deploy_path: /Users/vagrant/go/src/github.com/bitrise-steplib/bitrise-step-activate-build-cache-for-bazel/e2e/bitrise.yml
   generate_readme:
     steps:
-    - git::https://github.com/bitrise-steplib/steps-readme-generator.git: { }
+    - git::https://github.com/bitrise-steplib/steps-readme-generator.git: {}
