@@ -91,22 +91,7 @@ workflows:
             #!/bin/env bash
               
             set -ex
-              
-#            bazel build --nobuild //src:bazel-dev --announce_rc --verbose_failures
-#            execroot="$(bazel info execution_root)"
-#
-#            echo "python 3.12.8" >> ./.tool-versions
-#            cp .tool-versions "$execroot/.tool-versions"
-#
-#            echo "PATH: $PATH"
-#            which python
-#            which python3
-#            python --version
-#            python3 --version
-#            ls -l "$(which python3)"
-#            cat .tool-versions
-#            ls $(bazel info execution_root)/.tool-versions
-#
+
             bazel build  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
   _setup:
     envs:
