@@ -13,6 +13,7 @@ workflows:
         inputs:
         - enable_rbe: true
         - timestamps: true
+        - verbose: true
     - script:
         title: Check bazelrc
         inputs:

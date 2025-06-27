@@ -42,3 +42,11 @@ inputs:
     summary: Add timestamps to build messages
     description: |-
       When enabled, this sets up Bazel to add timestamps to log messages during the build.
+- verbose: "false"
+  opts:
+    title: Verbose logging
+    summary: Enable logging additional information for troubleshooting
+    is_required: true
+    value_options:
+      - "true"
+      - "false"

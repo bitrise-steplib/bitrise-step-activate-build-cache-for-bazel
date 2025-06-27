@@ -34,4 +34,4 @@ export BITRISE_BUILD_CACHE_CLI_VERSION="v0.17.0"
 curl --retry 5 -sSfL 'https://raw.githubusercontent.com/bitrise-io/bitrise-build-cache-cli/main/install/installer.sh' | sh -s -- -b /tmp/bin -d $BITRISE_BUILD_CACHE_CLI_VERSION
 
 # run the Bitrise Build Cache CLI
-/tmp/bin/bitrise-build-cache activate bazel --cache --cache-push --rbe="$enable_rbe" --timestamps="$timestamps"
+/tmp/bin/bitrise-build-cache activate bazel --debug="$verbose" --cache --cache-push --rbe="$enable_rbe" --timestamps="$timestamps"
