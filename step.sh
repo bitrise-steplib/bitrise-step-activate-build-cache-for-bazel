@@ -40,4 +40,4 @@ if [ "$enable_rbe" == "true" ]; then
 fi
 
 # run the Bitrise Build Cache CLI
-/tmp/bin/bitrise-build-cache activate bazel --debug="$verbose" --cache  --cache_push="$cache_push" --rbe="$enable_rbe" --timestamps="$timestamps"
+/tmp/bin/bitrise-build-cache activate bazel --debug="$verbose" --cache  --cache-push="$cache_push" --rbe="$enable_rbe" --timestamps="$timestamps"
