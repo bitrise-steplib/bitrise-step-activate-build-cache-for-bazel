@@ -65,9 +65,17 @@ workflows:
               mv bazelisk-darwin-arm64 bazel
             fi
 
-            asdf plugin add python
-            asdf install python 3.12.8
-            asdf global python 3.12.8
+            # Building a pinned CPython from source segfaults in ensurepip on
+            # macOS 26, so prefer a version the stack already has installed.
+            asdf plugin add python || true
+            PY_VERSION="$(asdf list python 2>/dev/null | tr -d ' *' | grep -E '^3\.' | tail -1)"
+            if [ -z "$PY_VERSION" ]; then
+              PY_VERSION="$(asdf latest python)"
+              asdf install python "$PY_VERSION"
+            fi
+            asdf global python "$PY_VERSION" || asdf set -u python "$PY_VERSION"
+            python3 --version
+            envman add --key ASDF_PYTHON_VERSION --value "$PY_VERSION"
 
             # Make the binary executable
             chmod +x bazel
@@ -88,7 +96,7 @@ workflows:
               
             set -ex
 
-            bazel build --action_env=ASDF_PYTHON_VERSION=3.12.8  --sandbox_debug --announce_rc --verbose_failures  //src:bazel-dev
+            bazel build --action_env=ASDF_PYTHON_VERSION="$ASDF_PYTHON_VERSION" --sandbox_debug --announce_rc --verbose_failures //src:bazel-dev
   _setup:
     envs:
     - USE_BAZEL_VERSION: 8.2.1
