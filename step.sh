@@ -59,6 +59,15 @@ if [ ! -f /tmp/bin/bitrise-build-cache ]; then
   exit 1
 fi
 
+# Copy the CLI onto $PATH: Bazel resolves `--credential_helper=...=bitrise-build-cache`
+# through $PATH on every invocation. Copied rather than moved so anything already
+# referencing /tmp/bin/bitrise-build-cache keeps working.
+# /usr/local/bin belongs to the build user on the container and macOS stacks, but not
+# on the Linux VM stacks, so fall back to sudo there. -n rather than a bare sudo: CI
+# has no TTY, so a password prompt would hang the build instead of failing it.
+cp -f /tmp/bin/bitrise-build-cache /usr/local/bin/bitrise-build-cache 2>/dev/null ||
+  sudo -n cp -f /tmp/bin/bitrise-build-cache /usr/local/bin/bitrise-build-cache
+
 cache_push="true"
 if [ "$enable_rbe" == "true" ]; then
   echo "Disabling cache push for RBE builds"
@@ -66,4 +75,4 @@ if [ "$enable_rbe" == "true" ]; then
 fi
 
 # run the Bitrise Build Cache CLI
-/tmp/bin/bitrise-build-cache activate bazel --debug="$verbose" --cache  --cache-push="$cache_push" --rbe="$enable_rbe" --timestamps="$timestamps"
+bitrise-build-cache activate bazel --debug="$verbose" --cache  --cache-push="$cache_push" --rbe="$enable_rbe" --timestamps="$timestamps"
